@@ -74,7 +74,7 @@ namespace HashTableDemo
                 linkedList.Remove(foundItem);
             }
         }
-        public void GetFrequency(V value)
+        public int GetFrequency(V value)
         {
             int frequency = 0;
             foreach (LinkedList<KeyValue<K, V>> list in items)
@@ -89,13 +89,29 @@ namespace HashTableDemo
                         frequency++;
                 }
             }
-            Console.WriteLine("Frequency of {0} is {1}", value, frequency);
+            Console.WriteLine("Value: {0} \t Frequency: {1}", value, frequency);
+            return frequency;
+        }
+        public void DisplayFrequency()
+        {
+            foreach (LinkedList<KeyValue<K, V>> list in items)
+            {
+                if (list == null)
+                    continue;
+                foreach (KeyValue<K, V> obj in list)
+                {
+                    if (obj.Equals(null))
+                        continue;
+                    else
+                        obj.frequency = GetFrequency(obj.Value);
+                }
+            }
         }
     }
-    public struct KeyValue<K, V>
+    public class KeyValue<K, V>
     {
         public K Key { get; set; }
         public V Value { get; set; }
+        public int frequency { get; set; }
     }
 }
-

@@ -10,31 +10,21 @@ namespace HashTableDemo
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to hashtable demo");
-            MyMapNode<string, string> hash = new MyMapNode<string, string>(5);
-            hash.Add("0", "Paranoids");
-            hash.Add("1", "are");
-            hash.Add("2", "not");
-            hash.Add("3", "paranoids");
-            hash.Add("4", "beacuse");
-            hash.Add("5", "they");
-            hash.Add("6", "are");
-            hash.Add("7", "paranoid");
-            hash.Add("8", "but");
-            hash.Add("9", "because");
-            hash.Add("10", "they");
-            hash.Add("11", "keep");
-            hash.Add("12", "putting");
-            hash.Add("13", "themselves");
-            hash.Add("14", "deliberately");
-            hash.Add("15", "into");
-            hash.Add("16", "paranoid");
-            hash.Add("17", "avoidable");
-            hash.Add("18", "situations");
-            hash.GetFrequency("avoidable");
+            Console.WriteLine("Hello, Welcome to HashTable!");
+            MyMapNode<string, string> hash = new MyMapNode<string, string>(20);
+            String sentence = "Paranoids are not paranoid because they are paranoid but because they keep putting themselves deliberately into paranoid avoidable situations";
+            string[] paragraphSentence = sentence.Split(' ');
+            int SLength = paragraphSentence.Length;
+            for (int i = 0; i < SLength; i++)
+            {
+                hash.Add(Convert.ToString(i), paragraphSentence[i]);
+            }
+            Console.WriteLine(" ");
+            Console.WriteLine("Removing the word 'avoidable' from the hash table ");
+            Console.WriteLine("Frequency of 'avoidable' before removal is :" + hash.GetFrequency("avoidable"));
             hash.RemoveValue("avoidable");
-            hash.GetFrequency("avoidable");
-            Console.ReadKey();
+            Console.WriteLine("Frequency of 'avoidable' after removal is :" + hash.GetFrequency("avoidable"));
+            Console.ReadLine();
         }
     }
 }

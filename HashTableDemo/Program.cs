@@ -11,17 +11,19 @@ namespace HashTableDemo
         static void Main(string[] args)
         {
             Console.WriteLine("Hello, Welcome to HashTable!");
-            MyMapNode<string, string> hash = new MyMapNode<string, string>(5);
-            hash.Add("0", "To");
-            hash.Add("1", "be");
-            hash.Add("2", "or");
-            hash.Add("3", "not");
-            hash.Add("4", "To");
-            hash.Add("5", "be");
-            hash.GetFrequency("To");
-            string hash5 = hash.Get("5");
-            Console.WriteLine("5th index value: " + hash5);
-            Console.ReadKey();
+            MyMapNode<string, string> hash = new MyMapNode<string, string>(20);
+            String sentence = "Paranoids are not paranoid because they are paranoid but because they keep putting themselves deliberately into paranoid avoidable situations";
+            string[] paragraphSentence = sentence.Split(' ');
+            int SLength = paragraphSentence.Length;
+            for (int i = 0; i < SLength; i++)
+            {
+                hash.Add(Convert.ToString(i), paragraphSentence[i]);
+            }
+            foreach (string word in paragraphSentence)
+            {
+                hash.GetFrequency(word);
+            }
+            Console.ReadLine();
         }
     }
 }

@@ -19,10 +19,11 @@ namespace HashTableDemo
             {
                 hash.Add(Convert.ToString(i), paragraphSentence[i]);
             }
-            foreach (string word in paragraphSentence)
-            {
-                hash.GetFrequency(word);
-            }
+            Console.WriteLine(" ");
+            Console.WriteLine("Removing the word 'avoidable' from the hash table ");
+            Console.WriteLine("Frequency of 'avoidable' before removal is :" + hash.GetFrequency("avoidable"));
+            hash.RemoveValue("avoidable");
+            Console.WriteLine("Frequency of 'avoidable' after removal is :" + hash.GetFrequency("avoidable"));
             Console.ReadLine();
         }
     }

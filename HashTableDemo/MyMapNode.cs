@@ -8,7 +8,7 @@ namespace HashTableDemo
 {
     public class MyMapNode<K, V>
     {
-        
+
         public readonly int size;
         public readonly LinkedList<keyValue<K, V>>[] items;
 
@@ -27,7 +27,7 @@ namespace HashTableDemo
 
         protected LinkedList<keyValue<K, V>> GetLinkedlist(int position)
         {
-            
+
             LinkedList<keyValue<K, V>> linkedlist = items[position];
             if (linkedlist == null)
             {
@@ -37,15 +37,15 @@ namespace HashTableDemo
             return linkedlist;
         }
 
-        
+
         protected int GetArrayPosition(K key)
         {
-            
+
             int position = key.GetHashCode() % size;
             return Math.Abs(position);
         }
 
-        
+
         public V Get(K key)
         {
             int position = GetArrayPosition(key);
@@ -61,7 +61,7 @@ namespace HashTableDemo
             return default;
         }
 
-       
+
         public void Add(K key, V value)
         {
             int position = GetArrayPosition(key);
@@ -93,7 +93,7 @@ namespace HashTableDemo
             }
         }
 
-        
+
         public int GetFrequency(V value)
         {
             int frequency = 0;
@@ -118,6 +118,25 @@ namespace HashTableDemo
             Console.WriteLine(" ");
             Console.WriteLine("Word '{0}' appears {1} times", value, frequency);
             return frequency;
+        }
+
+        public void RemoveValue(V value)
+        {
+            foreach (LinkedList<keyValue<K, V>> list in items)
+            {
+                if (list == null)
+                    continue;
+                foreach (keyValue<K, V> obj in list)
+                {
+                    if (obj.Equals(null))
+                        continue;
+                    if (obj.value.Equals(value))
+                    {
+                        Remove(obj.key);
+                        break;
+                    }
+                }
+            }
         }
     }
 }

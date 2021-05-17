@@ -6,64 +6,82 @@ using System.Threading.Tasks;
 
 namespace HashTableDemo
 {
-    class MyMapNode<K, V>
+    public class MyMapNode<K, V>
     {
-        //Properties of MyMapNode
-        private readonly int size;
-        private readonly LinkedList<KeyValue<K, V>>[] items;
-        //Constructor to initialize array of given size
+        
+        public readonly int size;
+        public readonly LinkedList<keyValue<K, V>>[] items;
+
         public MyMapNode(int size)
         {
             this.size = size;
-            this.items = new LinkedList<KeyValue<K, V>>[size];
+            this.items = new LinkedList<keyValue<K, V>>[size];
         }
-        //To get LinkedList at the particular index
-        protected LinkedList<KeyValue<K, V>> GetLinkedList(int position)
+
+        public struct keyValue<k, v>
         {
-            LinkedList<KeyValue<K, V>> linkedList = items[position];
-            if (linkedList == null)
-            {
-                linkedList = new LinkedList<KeyValue<K, V>>();
-                items[position] = linkedList;
-            }
-            return linkedList;
+            public k key { get; set; }
+            public v value { get; set; }
+            public int Frequency { get; set; }
         }
-        //To get the index value with the help of key
+
+        protected LinkedList<keyValue<K, V>> GetLinkedlist(int position)
+        {
+            
+            LinkedList<keyValue<K, V>> linkedlist = items[position];
+            if (linkedlist == null)
+            {
+                linkedlist = new LinkedList<keyValue<K, V>>();
+                items[position] = linkedlist;
+            }
+            return linkedlist;
+        }
+
+        
         protected int GetArrayPosition(K key)
         {
+            
             int position = key.GetHashCode() % size;
             return Math.Abs(position);
         }
-        //To get the value with the help of key
+
+        
         public V Get(K key)
         {
             int position = GetArrayPosition(key);
-            LinkedList<KeyValue<K, V>> linkedList = GetLinkedList(position);
-            foreach (KeyValue<K, V> item in linkedList)
+
+            LinkedList<keyValue<K, V>> linkedlist = GetLinkedlist(position);
+            foreach (keyValue<K, V> item in linkedlist)
             {
-                if (item.Key.Equals(key))
+                if (item.key.Equals(key))
                 {
-                    return item.Value;
+                    return item.value;
                 }
             }
-            return default(V);
+            return default;
         }
+
+       
         public void Add(K key, V value)
         {
-            int position = GetArrayPosition(key);  // |-5| =5 |3|=3 |-3|=3
-            LinkedList<KeyValue<K, V>> linkedList = GetLinkedList(position);
-            KeyValue<K, V> item = new KeyValue<K, V>() { Key = key, Value = value };
-            linkedList.AddLast(item);
+            int position = GetArrayPosition(key);
+            LinkedList<keyValue<K, V>> linkedlist = GetLinkedlist(position);
+            keyValue<K, V> item = new keyValue<K, V>() { key = key, value = value };
+            linkedlist.AddLast(item);
+            Console.WriteLine(item.value + " :- is Added at Index : " + item.key);
         }
+
         public void Remove(K key)
         {
             int position = GetArrayPosition(key);
-            LinkedList<KeyValue<K, V>> linkedList = GetLinkedList(position);
+            LinkedList<keyValue<K, V>> linkedlist = GetLinkedlist(position);
+
             bool itemFound = false;
-            KeyValue<K, V> foundItem = default(KeyValue<K, V>);
-            foreach (KeyValue<K, V> item in linkedList)
+
+            keyValue<K, V> foundItem = default(keyValue<K, V>);
+            foreach (keyValue<K, V> item in linkedlist)
             {
-                if (item.Key.Equals(key))
+                if (item.key.Equals(key))
                 {
                     itemFound = true;
                     foundItem = item;
@@ -71,47 +89,35 @@ namespace HashTableDemo
             }
             if (itemFound)
             {
-                linkedList.Remove(foundItem);
+                linkedlist.Remove(foundItem);
             }
         }
+
+        
         public int GetFrequency(V value)
         {
             int frequency = 0;
-            foreach (LinkedList<KeyValue<K, V>> list in items)
+            foreach (LinkedList<keyValue<K, V>> list in items)
             {
                 if (list == null)
+                {
                     continue;
-                foreach (KeyValue<K, V> obj in list)
+                }
+                foreach (keyValue<K, V> obj in list)
                 {
                     if (obj.Equals(null))
+                    {
                         continue;
-                    if (obj.Value.Equals(value))
+                    }
+                    if (obj.value.Equals(value))
+                    {
                         frequency++;
+                    }
                 }
             }
-            Console.WriteLine("Value: {0} \t Frequency: {1}", value, frequency);
+            Console.WriteLine(" ");
+            Console.WriteLine("Word '{0}' appears {1} times", value, frequency);
             return frequency;
         }
-        public void DisplayFrequency()
-        {
-            foreach (LinkedList<KeyValue<K, V>> list in items)
-            {
-                if (list == null)
-                    continue;
-                foreach (KeyValue<K, V> obj in list)
-                {
-                    if (obj.Equals(null))
-                        continue;
-                    else
-                        obj.frequency = GetFrequency(obj.Value);
-                }
-            }
-        }
-    }
-    public class KeyValue<K, V>
-    {
-        public K Key { get; set; }
-        public V Value { get; set; }
-        public int frequency { get; set; }
     }
 }

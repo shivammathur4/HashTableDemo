@@ -11,7 +11,6 @@ namespace HashTableDemo
         static void Main(string[] args)
         {
             Console.WriteLine("Hello, Welcome to HashTable!");
-            //creating an object of mapnode class
             MyMapNode<string, string> hash = new MyMapNode<string, string>(5);
             hash.Add("0", "To");
             hash.Add("1", "be");
